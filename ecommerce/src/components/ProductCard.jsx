@@ -29,7 +29,7 @@ export const ProductCard = (props) => {
     }
 
     return(
-        <div className='w-[260px] pb-4 border border-gray-300 rounded-lg'>
+        <div className='flex flex-col pb-4 border border-gray-300 rounded-lg'>
             <div className="relative group">
                 {props.product.isSpecialOffer && (
                     <div className="absolute top-2 left-2 h-[24px] p-2 rounded-lg bg-red-400 flex items-center">
@@ -46,7 +46,7 @@ export const ProductCard = (props) => {
                         <Button 
                             onClick={() => leftImageclick(props.product.images.length)}
                             name="<" 
-                            style="w-[30px] h-[30px] rounded-full bg-gray-200 text-black text-sm flex items-center justify-center"
+                            style="rounded-full bg-gray-200 text-black text-sm flex items-center justify-center"
                         />
                         <Button 
                             onClick={() => rightImageClick(props.product.images.length)}
@@ -56,26 +56,26 @@ export const ProductCard = (props) => {
                     </div>  
                 )}
                 <img 
-                    className="w-[260px] h-[260px] rounded-t-lg"
+                    className="w-full aspect-square object-cover rounded-t-lg"
                     src={props.product.images[imageCount]} 
                     alt={props.product.model} 
                 />
             </div>
-            <div className="p-4">
+            <div className="p-4 flex-1 flex flex-col">
                 <p className="text-sm text-gray-400">{props.product.brand}</p>
                 <p className="font-bold">{props.product.model}</p>
-                <p className="mt-4">${props.product.price}</p>
+                <p className="mt-auto pt-4h">${props.product.price}</p>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center px-4">
                 {countInCart == 0 ? (
                     <Button 
                         onClick={addCartClick}
                         name="Add to Cart" 
-                        style="w-[228px] border rounded-lg bg-black text-white px-4 py-2"
+                        style="w-full border rounded-lg bg-black text-white py-2"
                     />
                 ) : (
-                    <div className="w-full px-4 flex justify-between items-center">
+                    <div className="w-full flex justify-between items-center">
                         <Button 
                             onClick={minusCartClick}
                             name="-" 
