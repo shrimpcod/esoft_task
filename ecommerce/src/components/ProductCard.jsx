@@ -2,22 +2,16 @@ import { useState } from "react"
 import { Button } from "./Button"
 import { FaHeart } from "react-icons/fa"     
 import { FaRegHeart } from "react-icons/fa"
+import { useCart } from "../context/CartContext"
 
-export const ProductCard = (props) => {
+export const ProductCard = ({ className, product }) => {
+    const {cart, addToCart, deleteFromCart } = useCart()
+
     const [isFavorite, setIsFavorite] = useState(false)
     const favoriteStyle = "absolute top-2 right-2 rounded-lg bg-red-400 text-white text-sm p-2 flex items-center transition duration-100"
     const notFavoriteStyle = "absolute top-2 right-2 rounded-lg bg-gray-100 text-black text-sm p-2 flex items-center transition duration-100"
     const favoriteClick = () => {
         setIsFavorite(!isFavorite)
-    }
-
-    const [countInCart, setCountInCart] = useState(0)
-    const addCartClick = () => setCountInCart(1)
-    const minusCartClick = () => {
-        if (countInCart > 0) setCountInCart(countInCart - 1)
-    } 
-    const plusCartClick = () => {
-        if (countInCart >= 0) setCountInCart(countInCart + 1)
     }
 
     const [imageCount, setImageCount] = useState(0)
@@ -29,64 +23,68 @@ export const ProductCard = (props) => {
     }
 
     return(
-        <div className='flex flex-col pb-4 border border-gray-300 rounded-lg'>
+        <div className='flex flex-col pb-4 border border-gray-300 rounded-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1'>
             <div className="relative group">
-                {props.product.isSpecialOffer && (
-                    <div className="absolute top-2 left-2 h-[24px] p-2 rounded-lg bg-red-400 flex items-center">
+                {product.isSpecialOffer && (
+                    <div className="absolute top-2 left-2 h-[24px] p-2 rounded-lg flex items-center bg-gradient-to-t from-red-500 to-orange-600 shadow-sm">
                         <p className="text-white text-sm">Special Offer</p>
                     </div>
                 )}
                 <Button 
                     onClick = {favoriteClick}
-                    name={isFavorite ? <FaHeart /> : <FaRegHeart />}
-                    style= {isFavorite ? favoriteStyle : notFavoriteStyle}
-                />
-                {props.product.images.length > 1 && (
+                    className= {isFavorite ? favoriteStyle : notFavoriteStyle}
+                >
+                    {isFavorite ? <FaHeart /> : <FaRegHeart />}
+                </Button>
+                {product.images.length > 1 && (
                     <div className="absolute w-full flex justify-between top-[50%] px-2 opacity-0 group-hover:opacity-100 transition duration-200">
                         <Button 
-                            onClick={() => leftImageclick(props.product.images.length)}
-                            name="<" 
-                            style="rounded-full bg-gray-200 text-black text-sm flex items-center justify-center"
-                        />
+                            onClick={() => leftImageclick(product.images.length)}
+                            className="w-[30px] h-[30px] rounded-full bg-gray-200 text-black text-sm flex items-center justify-center"
+                        >
+                            {'<'}
+                        </Button>
                         <Button 
-                            onClick={() => rightImageClick(props.product.images.length)}
-                            name=">" 
-                            style="w-[30px] h-[30px] rounded-full bg-gray-200 text-black text-sm flex items-center justify-center"
-                        />
+                            onClick={() => rightImageClick(product.images.length)}
+                            className="w-[30px] h-[30px] rounded-full bg-gray-200 text-black text-sm flex items-center justify-center"
+                        >
+                            {'>'}
+                        </Button>
                     </div>  
                 )}
-                <img 
-                    className="w-full aspect-square object-cover rounded-t-lg"
-                    src={props.product.images[imageCount]} 
-                    alt={props.product.model} 
-                />
+                <div className="overflow-hidden">
+                    <img 
+                        className="w-full aspect-square object-cover rounded-t-lg hover:scale-110 transition-transform duration-500"
+                        src={product.images[imageCount]} 
+                        alt={product.model} 
+                    />
+                </div>
             </div>
             <div className="p-4 flex-1 flex flex-col">
-                <p className="text-sm text-gray-400">{props.product.brand}</p>
-                <p className="font-bold">{props.product.model}</p>
-                <p className="mt-auto pt-4h">${props.product.price}</p>
+                <p className="text-sm text-gray-400">{product.brand}</p>
+                <p className="font-bold line-clamp-2">{product.model}</p>
+                <p className="mt-auto pt-4 text-lg font-bold">${product.price}</p>
             </div>
 
             <div className="flex justify-center px-4">
-                {countInCart == 0 ? (
+                {!cart.has(product.id) ? (
                     <Button 
-                        onClick={addCartClick}
-                        name="Add to Cart" 
-                        style="w-full border rounded-lg bg-black text-white py-2"
-                    />
+                        className="w-full border rounded-lg bg-black text-white py-2"
+                        onClick={() => addToCart(product)}
+                    >
+                        Add to Cart
+                    </Button>
                 ) : (
                     <div className="w-full flex justify-between items-center">
                         <Button 
-                            onClick={minusCartClick}
-                            name="-" 
-                            style="w-[40px] h-[40px] rounded-xl bg-gray-200 text-black text-sm flex items-center justify-center"
-                        />
-                        <p>{countInCart} in cart</p>
+                            onClick={() => deleteFromCart(product)}
+                            className="w-[40px] h-[40px] rounded-xl bg-gray-200 text-black text-sm flex items-center justify-center"
+                        > - </Button>
+                        <p>{cart.get(product.id).quantity} in cart</p>
                         <Button
-                            onClick={plusCartClick}
-                            name="+" 
-                            style="w-[40px] h-[40px] rounded-xl bg-black text-white text-sm flex items-center justify-center"
-                        />
+                            onClick={() => addToCart(product)}
+                            className="w-[40px] h-[40px] rounded-xl bg-black text-white text-sm flex items-center justify-center"
+                        > + </Button>
                     </div> 
                 )}
                 

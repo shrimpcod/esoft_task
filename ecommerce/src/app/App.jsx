@@ -1,9 +1,9 @@
-import { HomePage } from '../pages/Home'
+import { Container } from '../components/Container'
 
 export default function App() {
     return(
         <>
-            <HomePage />
+            <Container />
         </>
     )
 }

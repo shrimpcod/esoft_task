@@ -1,11 +1,16 @@
-import  { Sidebar }  from './Sidebar'
-import { Body } from './Body'
+import { ProductsPage } from "../pages/ProductsPage"
+import { Cart } from "../pages/Cart"
+import { useProducts } from "../context/ProductsContext"
 
 export const Content = () => {
+    const { productPage } = useProducts()
     return(
-        <main className='flex-1 flex flex-col lg:flex-row gap-4 px-4 xl:px-[180px] py-[30px]'>
-            <Sidebar />
-            <Body />
-        </main>
+        <>
+            {productPage === 'cart' ? (
+                <Cart />
+            ) : (
+                <ProductsPage />
+            )}
+        </>
     )
 }

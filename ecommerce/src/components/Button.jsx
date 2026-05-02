@@ -1,9 +1,10 @@
-export const Button = (props) => {
+export const Button = ({ className, onClick, children}) => {
     return(
         <button 
-            className={props.style} onClick={props.onClick}
+            className={`${`cursor-pointer active:scale-95 transition-all`} ${className}`} 
+            onClick={onClick}
         >
-            {props.name}
+            {children}
         </button>
     )
 }

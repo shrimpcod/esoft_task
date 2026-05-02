@@ -54,9 +54,8 @@ export const Footer = ({}) => {
                                 className="w-[231px] min-w-0 px-2 bg-gray-200 border rounded-lg border-gray-300 text-gray-500"
                             />
                             <Button 
-                                name="Subscribe" 
-                                style= "w-[103pxh] border rounded-lg bg-black text-white px-4 py-2"
-                            />
+                                className="w-[103pxh] border rounded-lg bg-black text-white px-4 py-2"
+                            > Subscribe </Button>
                         </div>  
                     </div>
                 </div>
