@@ -4,11 +4,14 @@ import { CategoryButton } from './CategoryButton'
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { useProducts } from '../context/ProductsContext'
+import { Button } from './Button'
+import { useModal } from '../context/ModalContext'
 
 export const Header = () => {
     const categories = ['tv', 'phone', 'laptop']
     const { totalItems } = useCart()
     const { productPage, setProductPage } = useProducts()
+    const { openModal } = useModal()
 
     return(
         <header className='flex flex-col sm:flex-row sm:items-center xl:px-[140px] border-b border-b-gray-200 bg-white sticky top-0 z-50 shadow-sm'>
@@ -20,6 +23,12 @@ export const Header = () => {
                     Tech Store
                 </h1>
                 <div className='relative flex gap-4 items-center sm:hidden'>
+                    <Button
+                        className="text-black"
+                        onClick={() => {}}
+                    >
+                        МO
+                    </Button>
                     <CartIcon />
                     <FiUser 
                         size={20} 
@@ -42,6 +51,12 @@ export const Header = () => {
             </nav>
 
             <div className='hidden px-4 sm:flex gap-4 items-center'>
+                <Button
+                    className="w-[30px] h-[30px] rounded-xl bg-black text-white text-sm flex items-center justify-center"
+                    onClick={() => openModal()}
+                >
+                    МO
+                </Button>
                 <CartIcon />
                 <FiUser 
                     size={20} 

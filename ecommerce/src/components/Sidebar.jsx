@@ -2,6 +2,8 @@ import { Dropdown } from './Dropdown'
 import { FiClock } from 'react-icons/fi'
 import { Button } from './Button'
 import { useProducts } from '../context/ProductsContext'
+import { SpecialDeal } from './SpecialDeal'
+import { WeatherWidget } from './WeatherWidget'
 
 export const Sidebar = () => {
     const { products, productPage, draftFilters, setDraftFilters, handleApply } = useProducts()
@@ -63,20 +65,8 @@ export const Sidebar = () => {
                 </Button>
 
             </div>
-            <div className="flex flex-col bg-linear-to-br from-red-500 to-red-600 rounded-xl text-white p-5 shadow-md shadow-red-200">
-                <div className="flex gap-3 items-center">
-                    <FiClock size={24} className='animate-pulse'/>
-                    <p className="text-lg font-bold">Special Deal!</p>
-                </div>
-                <p className="mt-2 text-sm opacity-90 leading-relaxed">
-                    Register now to unlock exclusive offers and discou
-                </p>
-                <div className="w-full mt-4 flex justify-between items-center border-t border-white/50 pt-4">
-                        <p className='text-xs uppercase tracking-wider opacity-80'>Offer expires in:</p>
-                        <p className="font-mono font-bold text-lg">0:59:59</p>
-                </div>
-                
-            </div>
+            <SpecialDeal />
+            <WeatherWidget />    
         </div>
     )
 }
